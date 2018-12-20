@@ -16,7 +16,7 @@ function main() {
 
     const defaults = {
         __PROD__:false,
-        __MOCKS__:false,
+        __MOCKS__:true,
         __BASENAME__:'',
         __API__:'/api'
     };

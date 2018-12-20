@@ -8,8 +8,11 @@ import { EffectsModule } from '@ngrx/effects';
 import { RouterStateSerializer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { ngxLoadingAnimationTypes, NgxLoadingModule } from 'ngx-loading';
 import { environment } from '../../environments/environment';
+import { MockModule } from '../mock/mock.module';
+import { MockService } from '../mock/mock.service';
 import { SharedModule } from '../shared/shared.module';
 import { ActivityIndicatorComponent } from './activity-indicator/activity-indicator.component';
 import { HomeComponent } from './home/home.component';
@@ -33,6 +36,12 @@ const components = [
         HttpClientModule,
         RouterModule,
         BrowserAnimationsModule,
+        environment.mocks ? MockModule : [],
+        environment.mocks ? HttpClientInMemoryWebApiModule.forRoot(MockService, {
+            delay:1000,
+            passThruUnknownUrl:true,
+            apiBase:environment.baseName ? environment.baseName : undefined
+        }) : [],
         SharedModule, // Only truly used components will be inserted into the main bundle thanks to tree-shaking.
         StoreModule.forRoot(reducers, {metaReducers}),
         !environment.production ? StoreDevtoolsModule.instrument() : [],
