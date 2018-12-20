@@ -1,0 +1,120 @@
+
+# Performance hints
+
+## Analysing bundles content
+
+There is two tools in dev dependencies that may help analyse and understand what is encapsulated in each bundle.
+
+You need first to build in production mode with some flags on to generate a few statistics:
+
+```bash
+npm run build:stats
+```
+
+Then you may analyse each report with the tool of your choice.
+
+### webpack-bundle-analyzer
+
+This module will help you:
+
+- Realize what's really inside your bundle
+- Find out what modules make up the most of its size
+- Find modules that got there by mistake
+- Optimize it!
+
+A few notes:
+
+- This module is compatible with minified bundles!
+- It parses them to get real size of bundled modules
+- It also shows their gzipped sizes
+- Tree map is zoomable
+
+```bash
+# Show a global tree map including all bundles
+npx webpack-bundle-analyzer dist/liveaction-tp/stats.json
+```
+
+As a shortcut for WBA, you can run:
+
+```bash
+npm run stats
+```
+
+### source-map-explorer
+
+More or less like webpack-bundle-analyzer except that:
+
+- it only works with one bundle at a time
+- it works with css bundles too!
+- it gives you an incremental percentage value per level of encapsulation
+
+```bash
+npx source-map-explorer dist/liveaction-tp/main.*.js dist/liveaction-tp/main.*.js.map
+
+# Works with css too
+npx source-map-explorer dist/liveaction-tp/styles.*.css dist/liveaction-tp/styles.*.css.map
+```
+
+Or simpler:
+```bash
+npm run stats:se --bundle=styles.*.css
+```
+
+## Icons
+
+Icons are picked from [Material Design Icons]. But we are not using the default solution with the font icon cause it adds 44K and 800 icons when are using just a few.
+
+Instead we are generating an svg sprite in `src/assets/material-icons.svg` containing only icons we really need via:
+
+```bash
+npx gulp svg
+```
+
+SVG files are referenced in `gulpfile.js`.
+
+In order to use an icon in a component template:
+
+```html
+<la-svg-icon icon="menu"></la-svg-icon>
+```
+
+With this solution it is also possible to use it directly without any wrapper:
+
+```html
+<svg class="svg-24px"><use xlink:href="material-icons.svg#ic_menu_24px"></use></svg>
+```
+
+This is a drop-in replacement for `<mat-icon>`.
+
+`<mat-icon>` is not used cause it doesn't handle nicely svg icons. It is a good pick for font icons though.
+
+Advantages:
+
+- the weight is much more lighter depending on the number of icons included
+- with the right build tools we could inline svg automatically and style specific parts if needed
+- icon is always perfect, no antialiasing problem nor size selection ([see this comment](https://github.com/google/material-design-icons/issues/582#issuecomment-287492782))
+
+Consequences:
+
+- a build task must be added to create the sprite
+- the icon is not a font and thus doesn't inherit current text properties like font-size (the color is inherited though is you use the component)
+- compatibility will reduce: Internet Explorer, Edge, and older Android and iOS browsers cannot use external svg files. There is nonetheless a polyfill named [svg4everybody](https://github.com/jonathantneal/svg4everybody). More info in [Material Icons Guide].
+
+A few remarks:
+
+- icons are downloaded directly from material design icons site and not installed via npm:
+    - it avoids us a slow download over network of the entire library
+    - it allows us to download the icon we need in the form and color we need directly without searching it in node_modules
+    - svg icons are downloaded in 24px size and put in `svg` folder
+    - the downloaded file should be renamed to respect `<la-svg-icon>` convention name: `<name>-24px.svg`
+    - you can then declare it in `gulpfile.js` and generate again the sprite: `npm run gen:svg-sprite`
+
+## Possible optimisations
+
+TODO
+
+[SVG sprite]: https://github.com/google/material-design-icons/tree/master/sprites
+[Material Design Icons]: https://github.com/google/material-design-icons
+[Material Icons Guide]: http://google.github.io/material-design-icons/
+[Material Icons]: https://github.com/marella/material-icons
+

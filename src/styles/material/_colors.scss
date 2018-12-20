@@ -1,0 +1,78 @@
+
+// Custom color palettes
+// -----------------------------------------------------------------------------------------------------------------------------
+// Generator for these palettes: http://mcg.mbitson.com/#!?grey=%235b6670&orange=%23fc9147&themename=liveaction
+// Default palettes in material design: https://material.io/design/color/the-color-system.html#tools-for-picking-colors
+// Tool to help select colors: https://material.io/tools/color/#!/?view.left=0&view.right=0
+// Tool to visualize your theme on angular material components: http://materialtheme.arcsine.org/
+
+// Custom grey palette that overrides the default one
+// Base color used to generate the palette: #5B6670
+$mat-grey: (
+    50 : #ebedee,
+    100 : #ced1d4,
+    200 : #adb3b8,
+    300 : #8c949b,
+    400 : #747d85,
+    500 : #5b6670,
+    600 : #535e68,
+    700 : #49535d,
+    800 : #404953,
+    900 : #2f3841,
+    A100 : #91c5ff,
+    A200 : #5eaaff,
+    A400 : #2b8fff,
+    A700 : #1281ff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+$mat-gray: $mat-grey;
+
+// Custom orange palette that overrides the default one
+// Base color used to generate the palette: #FC9147
+$mat-orange: (
+    50 : #fff2e9,
+    100 : #fedec8,
+    200 : #fec8a3,
+    300 : #fdb27e,
+    400 : #fca263,
+    500 : #fc9147,
+    600 : #fc8940,
+    700 : #fb7e37,
+    800 : #fb742f,
+    900 : #fa6220,
+    A100 : #ffffff,
+    A200 : #fffefd,
+    A400 : #ffd9ca,
+    A700 : #ffc6b1,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);

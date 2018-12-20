@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+
+@charset "UTF-8";
+
+
+// Tools
+// -----
+
+@import '_variables.scss';
+@import '_helpers.scss';
+
+
+// Fonts
+// -----
+
+@import '_fonts.scss';
+
+
+// Angular Material Theme
+// ----------------------
+
+@import 'material/_index.scss';

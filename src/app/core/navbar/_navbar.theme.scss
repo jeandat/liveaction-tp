@@ -1,0 +1,30 @@
+@mixin navbar-theme($theme) {
+
+    $primary:map_get($theme, primary);
+    $accent:map_get($theme, accent);
+    $foreground:map-get($theme, foreground);
+    $background:map-get($theme, background);
+
+    la-navbar {
+        border-bottom:2px solid map-get($foreground, divider);
+        a {
+            color:map-get($primary, default-contrast);
+        }
+        a.active {
+            color:mat-color($accent);
+        }
+        .hamburger-inner {
+            &, &:before, &:after {
+                background-color:mat-color($accent-palette);
+            }
+        }
+    }
+
+    @include media('<=xs') {
+        la-navbar {
+            nav {
+                background-color:map-get($background, app-bar);
+            }
+        }
+    }
+}

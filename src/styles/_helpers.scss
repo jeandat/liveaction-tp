@@ -1,0 +1,32 @@
+.flow {
+    display: flex;
+    place-content:center center;
+    .column {
+        flex-direction:column;
+    }
+    .row {
+        flex-direction:row;
+    }
+}
+
+// Specific to touch devices
+.touch-device {
+    .no-highlight-on-tap {
+        cursor: default !important;
+    }
+    &.no-scrolling {
+        overflow: hidden;
+    }
+}
+
+.no-visited-decoration {
+    &:hover,
+    & a:hover {
+        text-decoration: none !important;
+    }
+
+    &:visited,
+    & a:visited {
+        color: inherit;
+    }
+}
