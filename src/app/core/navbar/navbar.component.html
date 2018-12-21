@@ -10,11 +10,10 @@
     <nav aria-label="root" [ngClass]="{'is-opened':menuOpened}" id="navigation">
         <ul>
             <li>
-                <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }" routerLink="/"
-                   class="no-visited-decoration">Home</a>
+                <a routerLinkActive="active" routerLink="/home" class="no-visited-decoration">Home</a>
             </li>
             <li>
-                <a class="no-visited-decoration">Foo</a>
+                <a routerLinkActive="active" routerLink="/foo" class="no-visited-decoration">Foo</a>
             </li>
             <li>
                 <a class="no-visited-decoration">Bar</a>

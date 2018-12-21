@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { getStatusText, InMemoryDbService, ResponseOptions } from 'angular-in-memory-web-api';
+import { getStatusText, InMemoryDbService, ResponseOptions, STATUS } from 'angular-in-memory-web-api';
 import { RequestInfo } from 'angular-in-memory-web-api/interfaces';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
@@ -19,11 +19,6 @@ const sites = sitesMock;
 export class MockService implements InMemoryDbService {
 
     constructor() {
-    }
-
-    // HTTP GET interceptor
-    get(reqInfo:RequestInfo) {
-        return undefined; // let the default GET handle the rest
     }
 
     createDb(reqInfo?:RequestInfo):{} | Observable<{}> | Promise<{}> {
@@ -58,15 +53,40 @@ export class MockService implements InMemoryDbService {
         }
     }
 
-    // Intercept ResponseOptions from default HTTP method handlers.
-    // Every objects in each mock is cloned.
+    // HTTP GET interceptor
+    get(reqInfo:RequestInfo) {
+        const collectionName = reqInfo.collectionName;
+        if (collectionName === 'sites' && !reqInfo.id) {
+            return this.getSites(reqInfo);
+        }
+        return undefined; // let the default GET handle the rest
+    }
+
     // The objective is to serve different objects to mimic a true backend.
     responseInterceptor(resOptions:ResponseOptions, reqInfo:RequestInfo) {
         if (resOptions.body) {
             resOptions.body = JSON.parse(JSON.stringify(resOptions.body));
-            console.log('Just cloned response from url', reqInfo.url);
         }
         return resOptions;
+    }
+
+    private getSites(reqInfo:RequestInfo) {
+        return reqInfo.utils.createResponse$(() => {
+            console.log('HTTP GET override');
+
+            // tslint:disable-next-line
+            const collection = sites.map(({id, name}) => ({id, name})) as Site[];
+            const dataEncapsulation = reqInfo.utils.getConfig().dataEncapsulation;
+
+            // tslint:disable-next-line:triple-equals
+            const data = collection;
+
+            const options:ResponseOptions = {
+                body:dataEncapsulation ? {data} : data,
+                status:STATUS.OK
+            };
+            return this.finishOptions(options, reqInfo);
+        });
     }
 
     private finishOptions(options:ResponseOptions, {headers, url}:RequestInfo) {

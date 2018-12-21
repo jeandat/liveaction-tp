@@ -1,7 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { MatSnackBarModule, MatToolbarModule } from '@angular/material';
+import {
+    MatButtonModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatSnackBarModule,
+    MatToolbarModule
+} from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
@@ -14,13 +20,13 @@ import { environment } from '../../environments/environment';
 import { MockModule } from '../mock/mock.module';
 import { MockService } from '../mock/mock.service';
 import { SharedModule } from '../shared/shared.module';
+import { SiteModule } from '../site/site.module';
 import { ActivityIndicatorComponent } from './activity-indicator/activity-indicator.component';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { CommonErrorsFilter } from './network/common-errors-filter.service';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { LightRouterStateSerializer, metaReducers, reducers } from './store/core.reducer';
-import { SiteModule } from '../site/site.module';
 
 
 const components = [
@@ -37,6 +43,11 @@ const components = [
         HttpClientModule,
         RouterModule,
         BrowserAnimationsModule,
+        MatToolbarModule,
+        MatSnackBarModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatButtonModule,
         environment.mocks ? MockModule : [],
         environment.mocks ? HttpClientInMemoryWebApiModule.forRoot(MockService, {
             delay:1000,
@@ -48,8 +59,6 @@ const components = [
         !environment.production ? StoreDevtoolsModule.instrument() : [],
         StoreRouterConnectingModule.forRoot({stateKey:'router'}),
         EffectsModule.forRoot([]),
-        MatToolbarModule,
-        MatSnackBarModule,
         NgxLoadingModule.forRoot({
             animationType:ngxLoadingAnimationTypes.doubleBounce,
             backdropBackgroundColour:'transparent',

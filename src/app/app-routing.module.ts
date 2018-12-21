@@ -5,7 +5,9 @@ import { NotFoundComponent } from './core/not-found/not-found.component';
 
 
 const routes:Routes = [
-    {path:'', component:HomeComponent},
+    {path:'', pathMatch:'full', redirectTo:'home'},
+    {path:'home', component:HomeComponent},
+    {path:'foo', loadChildren:'./foo/foo.module#FooModule'},
     {path:'not-found', component:NotFoundComponent},
     {path:'**', component:NotFoundComponent}
 ];

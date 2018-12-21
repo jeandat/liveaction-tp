@@ -3,6 +3,7 @@ import { Site } from '../core/model/site.model';
 export const sitesMock:Site[] = [
     {
         id:'SiteA',
+        name:'Site A',
         trafficOut:[
             [1513317300, 1.580871E7],
             [1513317600, 1.8250857E7],
@@ -40,6 +41,7 @@ export const sitesMock:Site[] = [
     },
     {
         id:'SiteB',
+        name:'Site B',
         trafficOut:[
             [1513317300, 1.8556485E7],
             [1513317600, 1.4248009E7],

@@ -1,6 +1,40 @@
 @import 'variables';
 
-:host {
-    width: 100%;
+la-site-traffic {
+    margin-bottom:3rem;
 }
+
+.site-selection {
+    margin-bottom:$space-l;
+    justify-content:start;
+    vertical-align:middle;
+}
+
+.actions-bar {
+    margin: auto 0 auto 3rem;
+
+    button {
+        text-transform:uppercase;
+        margin:auto $space-l;
+        la-svg-icon {
+            margin-right:$space-m;
+        }
+    }
+}
+
+@include media('<=xs') {
+    .site-selection {
+        flex-direction:column;
+    }
+    .actions-bar {
+        width: 100%;
+        display:flex;
+        margin: $space-l 0 0 0;
+        button {
+            flex: 1;
+        }
+    }
+}
+
+
 

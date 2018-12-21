@@ -1,3 +1,20 @@
 <div class="container">
 
+    <h1>Traffic out</h1>
+
+    <div class="site-selection flow">
+        <mat-form-field [hidden]="!!sites">
+            <mat-select #siteSelection placeholder="Site selection…" disableRipple>
+                <mat-option *ngFor="let site of sites; trackBy:siteIdentity" [value]="site">{{site.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div class="actions-bar" *ngIf="candidate">
+            <button mat-stroked-button (click)="cancel()">cancel</button>
+            <button mat-stroked-button (click)="changeCurrentSite()" color="accent">update</button>
+        </div>
+    </div>
+
+    <la-site-traffic [site]="currentSite" title="Graphe bleu" color="blue"></la-site-traffic>
+    <la-site-traffic [site]="currentSite" title="Graphe rouge" color="red"></la-site-traffic>
+
 </div>
