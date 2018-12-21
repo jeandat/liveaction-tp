@@ -20,6 +20,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { CommonErrorsFilter } from './network/common-errors-filter.service';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { LightRouterStateSerializer, metaReducers, reducers } from './store/core.reducer';
+import { SiteModule } from '../site/site.module';
 
 
 const components = [
@@ -54,7 +55,8 @@ const components = [
             backdropBackgroundColour:'transparent',
             primaryColour:'#49B2FF',
             secondaryColour:'#7CC8FF'
-        })
+        }),
+        SiteModule
     ],
     declarations:[
         ...components

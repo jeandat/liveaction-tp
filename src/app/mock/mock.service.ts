@@ -4,14 +4,14 @@ import { RequestInfo } from 'angular-in-memory-web-api/interfaces';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { Site } from '../core/model/site.model';
-import { siteMocks } from './sites.mock';
+import { sitesMock } from './sites.mock';
 
 
 export interface MockDb {
     sites:Site[];
 }
 
-const sites = siteMocks;
+const sites = sitesMock;
 
 @Injectable({
     providedIn:'root'

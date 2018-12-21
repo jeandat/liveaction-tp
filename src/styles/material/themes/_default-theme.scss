@@ -58,6 +58,9 @@ $theme:mat-light-theme($primary-palette, $accent-palette, $warn-palette);
 
     // App (core + components)
     @include app-theme($theme);
+
+    // Other Libs
+    @include libs-theme($theme);
 }
 
 

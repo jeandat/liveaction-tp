@@ -26,6 +26,7 @@
 
 @import "mixins/_libs.scss";
 @include hamburgers-core($typography-config);
+@include highcharts-core($typography-config);
 
 
 // Themes

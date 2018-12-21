@@ -1,9 +1,9 @@
 import { Site } from '../core/model/site.model';
 
-export const siteMocks:Site[] = [
+export const sitesMock:Site[] = [
     {
         id:'SiteA',
-        traficOut:[
+        trafficOut:[
             [1513317300, 1.580871E7],
             [1513317600, 1.8250857E7],
             [1513317900, 1.828695E7],
@@ -40,7 +40,7 @@ export const siteMocks:Site[] = [
     },
     {
         id:'SiteB',
-        traficOut:[
+        trafficOut:[
             [1513317300, 1.8556485E7],
             [1513317600, 1.4248009E7],
             [1513317900, 1.2257187E7],

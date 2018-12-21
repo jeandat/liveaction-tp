@@ -1,11 +1,9 @@
 import { HttpClientModule } from '@angular/common/http';
 import { async, TestBed } from '@angular/core/testing';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { flatMap, tap } from 'rxjs/operators';
-import { failure } from '../../testing/failure';
-import { Site } from '../core/model/site.model';
-import { MockService } from '../mock/mock.service';
-import { siteMocks } from '../mock/sites.mock';
+import { failure } from '../../../testing/failure';
+import { MockService } from '../../mock/mock.service';
+import { sitesMock } from '../../mock/sites.mock';
 
 import { SiteService } from './site.service';
 
@@ -16,8 +14,8 @@ describe('SiteService', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports:[ HttpClientModule, HttpClientInMemoryWebApiModule.forRoot(MockService, { delay:10 }) ],
-            providers:[ SiteService ]
+            imports:[HttpClientModule, HttpClientInMemoryWebApiModule.forRoot(MockService, {delay:10})],
+            providers:[SiteService]
         }).compileComponents();
     }));
 
@@ -37,7 +35,7 @@ describe('SiteService', () => {
     }));
 
     it('can get site w/ id=SiteA', async(() => {
-        const site = siteMocks[0];
+        const site = sitesMock[0];
         service.get(site.id)
             .subscribe(
                 fetchedSite => {

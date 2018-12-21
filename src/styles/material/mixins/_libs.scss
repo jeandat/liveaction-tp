@@ -40,6 +40,14 @@
 }
 
 
+// Insert theme for all libs except angular material
+@mixin libs-theme($theme) {
+
+    // Highcharts
+    @include highcharts-core-theme($theme);
+}
+
+
 // Hamburgers menu icon
 // --------------------
 
@@ -49,4 +57,18 @@
     .hamburger-box{
         vertical-align: middle;
     }
+}
+
+
+// Highcharts
+// ----------
+
+@mixin highcharts-core($typography-config) {
+
+}
+
+@mixin highcharts-core-theme($theme) {
+
+    $primary: map-get($theme, primary);
+
 }

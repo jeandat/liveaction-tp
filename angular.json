@@ -34,7 +34,9 @@
                                 "src/styles/"
                             ]
                         },
-                        "scripts": []
+                        "scripts": [
+                            "node_modules/human-format/index.js"
+                        ]
                     },
                     "configurations": {
                         "production": {

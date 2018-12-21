@@ -6,3 +6,5 @@ declare var __API__:boolean;
 
 // Tests utility functions
 declare function fail(message:string):void;
+
+declare function humanFormat(...args):string;
