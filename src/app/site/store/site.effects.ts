@@ -7,6 +7,7 @@ import { catchError, first, map, switchMap, tap } from 'rxjs/operators';
 import { ActivityIndicatorService } from '../../core/activity-indicator/activity-indicator.service';
 import { Site } from '../../core/model/site.model';
 import { ActionWithPayload, AppState } from '../../core/store/core.reducer';
+import { NO_ACTION } from '../../core/store/no-action';
 import { SiteService } from '../site-service/site.service';
 import {
     SAPI_GetSiteFailure,
@@ -43,7 +44,7 @@ export class SiteEffects {
             if (sites && sites.length) {
                 console.log(`Sites found in store`);
                 // Noop.
-                return of({type:'noop'} as Action);
+                return of(NO_ACTION as Action);
             }
             console.log('Sites not found in store => downloading…');
             this.ais.on('getSiteList$');

@@ -6,6 +6,7 @@ import { EMPTY, of, ReplaySubject, throwError } from 'rxjs';
 import { ActivityIndicatorService } from '../../core/activity-indicator/activity-indicator.service';
 import { Site } from '../../core/model/site.model';
 import { ActionWithPayload, AppState } from '../../core/store/core.reducer';
+import { NO_ACTION } from '../../core/store/no-action';
 import { SiteService } from '../site-service/site.service';
 import {
     SAPI_GetSiteFailure,
@@ -70,7 +71,7 @@ describe('Site Effects', () => {
         actions = new ReplaySubject<ActionWithPayload>(1);
         actions.next(inputAction);
         effects.getSiteList$.subscribe((result) => {
-            expect(result).toEqual({type:'noop'});
+            expect(result).toEqual(NO_ACTION);
             done();
         });
     });
