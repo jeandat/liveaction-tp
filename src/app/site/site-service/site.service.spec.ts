@@ -1,7 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { async, TestBed } from '@angular/core/testing';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { failure } from '../../../testing/failure';
+import { failure } from '../../../testing/helpers';
 import { MockService } from '../../mock/mock.service';
 import { sitesMock } from '../../mock/sites.mock';
 
