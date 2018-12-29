@@ -7,7 +7,7 @@ import { SiteService } from '../../site/site-service/site.service';
 import { TOV_GetSite, TOV_GetSiteList } from '../../site/store/site.actions';
 import { siteSelectors } from '../../site/store/site.selectors';
 import { Site } from '../model/site.model';
-import { LaHttpErrorResponse } from '../network/la-http-error-response';
+import { AppError } from '../network/app-error';
 import { SnackBarService } from '../snackbar/snackbar.service';
 import { AppState } from '../store/core.reducer';
 
@@ -65,10 +65,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     listenToErrors() {
         this.store.pipe(
             select(siteSelectors.selectError),
-            filter((err:LaHttpErrorResponse) => err != null && !err.processed),
+            filter((err:AppError) => err != null && !err.processed),
             takeUntil(this.done)
         ).subscribe(
-            (err:LaHttpErrorResponse) => {
+            (err) => {
                 this.snackbar.showError('Server is temporarily unavailable');
             }
         );

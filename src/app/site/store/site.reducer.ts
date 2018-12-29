@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { Site } from '../../core/model/site.model';
 import { SiteActions, SiteActionTypes } from './site.actions';
@@ -8,7 +7,7 @@ import { SiteActions, SiteActionTypes } from './site.actions';
 // Depending on data model and volumetry, we could have done something else entirely.
 export interface SiteState extends EntityState<Site> {
     // additional entities state properties
-    error?:HttpErrorResponse;
+    error?:any;
     current?:Site;
 }
 
