@@ -8,7 +8,7 @@ import { TOV_GetSite, TOV_GetSiteList } from '../../site/store/site.actions';
 import { siteSelectors } from '../../site/store/site.selectors';
 import { Site } from '../model/site.model';
 import { LaHttpErrorResponse } from '../network/la-http-error-response';
-import { SnackBar } from '../snackbar/snackbar.service';
+import { SnackBarService } from '../snackbar/snackbar.service';
 import { AppState } from '../store/core.reducer';
 
 
@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private done:Subject<boolean> = new Subject();
 
 
-    constructor(private siteService:SiteService, private snackbar:SnackBar, private store:Store<AppState>) {
+    constructor(private siteService:SiteService, private snackbar:SnackBarService, private store:Store<AppState>) {
 
     }
 
