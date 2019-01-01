@@ -1,8 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
-import { Action, Store } from '@ngrx/store';
+import { Action, Store, StoreModule } from '@ngrx/store';
 import { EMPTY, of, ReplaySubject, throwError } from 'rxjs';
+import { activityIndicatorServiceStub } from '../../../testing/activity-indicator-service.stub';
+import { siteServiceStub } from '../../../testing/site-service.stub';
 import { ActivityIndicatorService } from '../../core/activity-indicator/activity-indicator.service';
 import { Site } from '../../core/model/site.model';
 import { ActionWithPayload, AppState } from '../../core/store/core.reducer';
@@ -17,7 +19,9 @@ import {
     TOV_GetSiteList
 } from './site.actions';
 import { SiteEffects } from './site.effects';
+import { siteReducer, SiteState } from './site.reducer';
 import Spy = jasmine.Spy;
+import SpyObj = jasmine.SpyObj;
 
 
 const mocks = [{id:'1', name:'foo'}, {id:'2', name:'bar'}, {id:'3', name:'baz'}] as Site[];
@@ -26,37 +30,46 @@ describe('Site Effects', () => {
 
     let effects:SiteEffects;
     let actions:ReplaySubject<ActionWithPayload>;
+    let store:Store<SiteState>;
+    let siteService: SpyObj<SiteService>;
 
-    const ssMock = jasmine.createSpyObj('SiteService', ['get', 'getList']) as SiteService;
-    const aisMock = jasmine.createSpyObj('ActivityIndicatorService', ['on', 'off']) as ActivityIndicatorService;
-    const storeMock = jasmine.createSpyObj('Store', ['select', 'dispatch']) as Store<AppState>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports:[],
+            imports:[
+                StoreModule.forRoot({sites:siteReducer})
+            ],
             providers:[
                 SiteEffects,
                 provideMockActions(() => actions),
-                {provide:SiteService, useValue:ssMock},
-                {provide:ActivityIndicatorService, useValue:aisMock},
-                {provide:Store, useValue:storeMock}
+                {provide:SiteService, useValue:siteServiceStub},
+                {provide:ActivityIndicatorService, useValue:activityIndicatorServiceStub},
             ]
         });
 
         effects = TestBed.get(SiteEffects);
+        store = TestBed.get(Store);
+        spyOn(store, 'dispatch').and.callThrough();
+        siteService = TestBed.get(SiteService);
+        actions = new ReplaySubject<ActionWithPayload>(1);
     });
 
     it('should load sites from api', (done) => {
+
+        // Input
         const inputAction = new TOV_GetSiteList();
 
+        // Output
         const outputAction = new SAPI_GetSiteListSuccess({sites:mocks});
 
-        (storeMock.select as Spy).and.returnValue(of([]));
-        (ssMock.getList as Spy).and.returnValue(of(mocks));
+        // Context
+        store.dispatch(new SAPI_GetSiteListSuccess({sites:[]}));
+        siteService.getList.and.returnValue(of(mocks));
 
-        actions = new ReplaySubject<ActionWithPayload>(1);
+        // Trigger
         actions.next(inputAction);
 
+        // Expectations
         effects.getSiteList$.subscribe((result:SAPI_GetSiteListSuccess) => {
             expect(result instanceof SAPI_GetSiteListSuccess).toBe(true);
             expect(result).toEqual(outputAction);
@@ -66,10 +79,17 @@ describe('Site Effects', () => {
     });
 
     it('should load sites from store', (done) => {
+
+        // Input
         const inputAction = new TOV_GetSiteList();
-        (storeMock.select as Spy).and.returnValue(of(mocks));
-        actions = new ReplaySubject<ActionWithPayload>(1);
+
+        // Context
+        store.dispatch(new SAPI_GetSiteListSuccess({sites:mocks}));
+
+        // Trigger effect
         actions.next(inputAction);
+
+        // Expectations
         effects.getSiteList$.subscribe((result) => {
             expect(result).toEqual(NO_ACTION);
             done();
@@ -77,17 +97,22 @@ describe('Site Effects', () => {
     });
 
     it('should update state with HTTP error when fetching sites', (done) => {
+
+        // Input
         const inputAction = new TOV_GetSiteList();
 
+        // Output
         const error = new HttpErrorResponse({status:404});
         const outputAction = new SAPI_GetSiteListFailure({error});
 
-        (storeMock.select as Spy).and.returnValue(of([]));
-        (ssMock.getList as Spy).and.returnValue(throwError(error));
+        // Context
+        store.dispatch(new SAPI_GetSiteListSuccess({sites:[]}));
+        siteService.getList.and.returnValue(throwError(error));
 
-        actions = new ReplaySubject<ActionWithPayload>(1);
+        // Trigger effect
         actions.next(inputAction);
 
+        // Expectations
         effects.getSiteList$.subscribe((result:SAPI_GetSiteListFailure) => {
             expect(result instanceof SAPI_GetSiteListFailure).toBe(true);
             expect(result.payload.error).toBe(outputAction.payload.error);
@@ -96,16 +121,21 @@ describe('Site Effects', () => {
     });
 
     it('should load site from api', (done) => {
+
+        // Input
         const siteMock = mocks[0];
         const inputAction = new TOV_GetSite({id:'1'});
 
+        // Output
         const outputAction = new SAPI_GetSiteSuccess({site:siteMock});
 
-        (ssMock.get as Spy).and.returnValue(of(siteMock));
+        // Context
+        siteService.get.and.returnValue(of(siteMock));
 
-        actions = new ReplaySubject<ActionWithPayload>(1);
+        // Trigger effect
         actions.next(inputAction);
 
+        // Expectations
         effects.getSite$.subscribe((result:SAPI_GetSiteSuccess) => {
             expect(result instanceof SAPI_GetSiteSuccess).toBe(true);
             expect(result).toEqual(outputAction);
@@ -116,16 +146,21 @@ describe('Site Effects', () => {
 
 
     it('should update state with HTTP error when fetching a single site', (done) => {
+
+        // Input
         const inputAction = new TOV_GetSite({id:'1'});
 
+        // Output
         const error = new HttpErrorResponse({status:404});
         const outputAction = new SAPI_GetSiteFailure({error});
 
-        (ssMock.get as Spy).and.returnValue(throwError(error));
+        // Context
+        siteService.get.and.returnValue(throwError(error));
 
-        actions = new ReplaySubject<ActionWithPayload>(1);
+        // Trigger effect
         actions.next(inputAction);
 
+        // Expectations
         effects.getSite$.subscribe((result:SAPI_GetSiteFailure) => {
             expect(result instanceof SAPI_GetSiteFailure).toBe(true);
             expect(result.payload.error).toBe(outputAction.payload.error);
