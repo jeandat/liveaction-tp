@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatSelectChange } from '@angular/material';
+import { MatSelect, MatSelectChange } from '@angular/material';
 import { select, Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { filter, map, startWith, takeUntil } from 'rxjs/operators';
@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     // Site list
     // ---------
 
-    @ViewChild('siteSelection') siteSelection;
+    @ViewChild('siteSelection') siteSelection:MatSelect;
     sites:Site[];
 
     // Current site
@@ -105,7 +105,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     listenToSiteList() {
         this.store.pipe(
             select(siteSelectors.selectAll),
-            startWith([]),
+            filter((sites:Site[]) => sites != null && sites.length > 0),
             takeUntil(this.done)
         ).subscribe(
             (sites:Site[]) => {

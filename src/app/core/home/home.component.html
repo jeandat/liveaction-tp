@@ -9,8 +9,8 @@
             </mat-select>
         </mat-form-field>
         <div class="actions-bar" *ngIf="candidate">
-            <button mat-stroked-button (click)="cancel()">cancel</button>
-            <button mat-stroked-button (click)="changeCurrentSite()" color="accent">update</button>
+            <button mat-stroked-button class="js-cancel-button" (click)="cancel()">cancel</button>
+            <button mat-stroked-button class="js-confirm-button" (click)="changeCurrentSite()" color="accent">update</button>
         </div>
     </div>
 
