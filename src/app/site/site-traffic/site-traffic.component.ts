@@ -17,7 +17,7 @@ export class SiteTrafficComponent implements OnChanges {
     // ----------
 
     Highcharts = Highcharts; // required
-    chartOptions:{};
+    chartOptions:any;
 
     constructor() {
 

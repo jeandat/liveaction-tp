@@ -17,6 +17,9 @@ module.exports = function(config) {
             require('karma-jasmine-matchers'),
             require('@angular-devkit/build-angular/plugins/karma')
         ],
+        files:[
+            "../node_modules/human-format/index.js"
+        ],
         client:{
             clearContext:false // leave Jasmine Spec Runner output visible in browser
         },
