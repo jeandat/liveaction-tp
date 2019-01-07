@@ -6,6 +6,7 @@ import { filter, map, startWith, takeUntil } from 'rxjs/operators';
 import { SiteService } from '../../site/site-service/site.service';
 import { TOV_GetSite, TOV_GetSiteList } from '../../site/store/site.actions';
 import { siteSelectors } from '../../site/store/site.selectors';
+import { BaseComponent } from '../base.component';
 import { Site } from '../model/site.model';
 import { AppError } from '../network/app-error';
 import { SnackBarService } from '../snackbar/snackbar.service';
@@ -26,7 +27,7 @@ import { AppState } from '../store/core.reducer';
     templateUrl:'./home.component.html',
     styleUrls:['./home.component.scss']
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent extends BaseComponent implements OnInit {
 
     // Site list
     // ---------
@@ -40,26 +41,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     currentSite:Site;
     candidate:Site;
 
-    // Utils
-    // -----
-
-    // Used to clear subscriptions
-    private done:Subject<boolean> = new Subject();
-
 
     constructor(private siteService:SiteService, private snackbar:SnackBarService, private store:Store<AppState>) {
-
+        super();
     }
 
     ngOnInit() {
         this.listenToErrors();
         this.listenToSiteList();
         this.listenToSiteSeletionEvents();
-    }
-
-    ngOnDestroy():void {
-        this.done.next(true);
-        this.done.complete();
     }
 
     listenToErrors() {
