@@ -10,7 +10,8 @@
             "prefix": "la",
             "schematics": {
                 "@schematics/angular:component": {
-                    "styleext": "scss"
+                    "styleext": "scss",
+                    "changeDetection": "OnPush"
                 }
             },
             "architect": {

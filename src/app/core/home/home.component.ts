@@ -1,8 +1,7 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSelect, MatSelectChange } from '@angular/material';
 import { select, Store } from '@ngrx/store';
-import { Subject } from 'rxjs';
-import { filter, map, startWith, takeUntil } from 'rxjs/operators';
+import { filter, map, takeUntil } from 'rxjs/operators';
 import { SiteService } from '../../site/site-service/site.service';
 import { TOV_GetSite, TOV_GetSiteList } from '../../site/store/site.actions';
 import { siteSelectors } from '../../site/store/site.selectors';
@@ -25,7 +24,8 @@ import { AppState } from '../store/core.reducer';
 @Component({
     selector:'la-home',
     templateUrl:'./home.component.html',
-    styleUrls:['./home.component.scss']
+    styleUrls:['./home.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent extends BaseComponent implements OnInit {
 
@@ -42,7 +42,7 @@ export class HomeComponent extends BaseComponent implements OnInit {
     candidate:Site;
 
 
-    constructor(private siteService:SiteService, private snackbar:SnackBarService, private store:Store<AppState>) {
+    constructor(private siteService:SiteService, private snackbar:SnackBarService, private store:Store<AppState>, private cdr:ChangeDetectorRef) {
         super();
     }
 
@@ -87,6 +87,7 @@ export class HomeComponent extends BaseComponent implements OnInit {
                 this.currentSite = site;
                 if (this.siteSelection.value == null) this.siteSelection.value = this.findSite(this.currentSite.id);
                 this.candidate = null;
+                this.cdr.markForCheck();
             }
         );
     }
@@ -101,6 +102,7 @@ export class HomeComponent extends BaseComponent implements OnInit {
             (sites:Site[]) => {
                 this.sites = sites;
                 this.listenToCurrentSite();
+                this.cdr.markForCheck();
             }
         );
         this.store.dispatch(new TOV_GetSiteList());

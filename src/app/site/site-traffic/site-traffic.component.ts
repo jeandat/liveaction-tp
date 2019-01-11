@@ -1,11 +1,12 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import { Site } from '../../core/model/site.model';
 
 @Component({
     selector:'la-site-traffic',
     templateUrl:'./site-traffic.component.html',
-    styleUrls:['./site-traffic.component.scss']
+    styleUrls:['./site-traffic.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiteTrafficComponent implements OnChanges {
 

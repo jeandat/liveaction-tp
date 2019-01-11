@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
@@ -6,7 +6,8 @@ import { filter } from 'rxjs/operators';
 @Component({
     selector:'la-navbar',
     templateUrl:'./navbar.component.html',
-    styleUrls:['./navbar.component.scss']
+    styleUrls:['./navbar.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NavbarComponent implements OnInit {
 

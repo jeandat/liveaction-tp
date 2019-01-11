@@ -73,7 +73,7 @@ class SiteTrafficComponentStub {
 }
 
 
-fdescribe('HomeComponent', () => {
+describe('HomeComponent', () => {
 
     let fixture:ComponentFixture<HomeComponent>;
     let tester:ComponentTester;

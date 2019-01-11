@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 @Component({
@@ -7,6 +7,7 @@ import { Title } from '@angular/platform-browser';
         <la-navbar></la-navbar>
         <router-outlet></router-outlet>
     `,
+    changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
 

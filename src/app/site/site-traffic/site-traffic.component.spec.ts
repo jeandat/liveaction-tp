@@ -8,7 +8,7 @@ import { sitesMock } from '../../mock/sites.mock';
 import { SiteTrafficComponent } from './site-traffic.component';
 
 
-fdescribe('SiteTrafficComponent', () => {
+describe('SiteTrafficComponent', () => {
 
     @Component({
         template:'<la-site-traffic [site]="site" [color]="color" [title]="title"></la-site-traffic>'
