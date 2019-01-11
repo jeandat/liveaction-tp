@@ -106,7 +106,7 @@ export class HomeComponent extends BaseComponent implements OnInit {
         this.store.dispatch(new TOV_GetSiteList());
     }
 
-    siteIdentity(site:Site) {
+    siteIdentity(index, site:Site) {
         return site.id;
     }
 
